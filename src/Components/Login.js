@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 export class Login extends Component {
   constructor(props) {
     super(props);
-    this.handleFormSubmit = this.handleFormSubmit.bind(this); // Why?
+    // this.handleFormSubmit = this.handleFormSubmit.bind(this); // required with simple function
     this.state = {
         email:'',
         password:''
@@ -16,7 +16,7 @@ export class Login extends Component {
   handlePasswordInput=(event)=>{
     this.setState({password:event.target.value});
   }
-  handleFormSubmit(e) {
+  handleFormSubmit=(e) =>{
     e.preventDefault();
     console.log('state', this.state);
   }
