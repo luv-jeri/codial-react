@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { BrowserRouter as Router, Link, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import { fetchPosts } from '../Actions/Posts';
-import { PostsList, Navbar } from './';
+import { Home, Navbar,Page404 } from './';
 
 class App extends Component {
   componentDidMount() {
@@ -17,7 +17,17 @@ class App extends Component {
       <Router>
         <div>
           <Navbar />
-          <PostsList posts={this.props.posts} />
+          <Routes>
+            <Route
+              exact
+              path="/"
+              element={<Home {...(this.props)} posts={this.props.posts}  />}
+              // render={(props) => {
+              //   return <Home {...props} posts={this.props.posts} />;
+              // }}
+            />
+            <Route path='*' element={<Page404/>} />
+          </Routes>
         </div>
       </Router>
     );
