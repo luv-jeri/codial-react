@@ -4,13 +4,21 @@ export class Login extends Component {
   constructor(props) {
     super(props);
     this.handleFormSubmit = this.handleFormSubmit.bind(this); // Why?
-    this.emailInputRef = React.createRef();
-    this.passwordInputRef = React.createRef();
+    this.state = {
+        email:'',
+        password:''
+    };
+
+  }
+  handleEmailInput=(event)=>{
+    this.setState({email:event.target.value});
+  }
+  handlePasswordInput=(event)=>{
+    this.setState({password:event.target.value});
   }
   handleFormSubmit(e) {
     e.preventDefault();
-    console.log('email input', this.emailInputRef);
-    console.log('password input', this.passwordInputRef);
+    console.log('state', this.state);
   }
   render() {
     return (
@@ -21,7 +29,8 @@ export class Login extends Component {
             type="email"
             placeholder="Email"
             required
-            ref={this.emailInputRef}
+            onChange={this.handleEmailInput}
+            value={this.state.email}
           />
         </div>
         <div className="field">
@@ -29,7 +38,8 @@ export class Login extends Component {
             type="password"
             placeholder="Password"
             required
-            ref={this.passwordInputRef}
+            onChange={this.handlePasswordInput}
+            value={this.state.password}
           />
         </div>
         <div className="field">
