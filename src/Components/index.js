@@ -4,6 +4,7 @@ import Navbar from './Navbar';
 import Home from './Home';
 import Page404 from './Page404';
 import Login from './Login';
+import Signup from './Signup';
 
 export{
     // App,
@@ -12,4 +13,5 @@ export{
     Navbar,
     Page404,
     Login,
+    Signup,
 }

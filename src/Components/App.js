@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import { fetchPosts } from '../Actions/Posts';
-import { Home, Navbar,Page404,Login } from './';
+import { Home, Navbar,Page404,Login,Signup } from './';
 
 class App extends Component {
   componentDidMount() {
@@ -27,6 +27,7 @@ class App extends Component {
               // }}
             />
             <Route path='/login' element={<Login/>}/>
+            <Route path='/signup' element={<Signup/>}/>
             <Route path='*' element={<Page404/>} />
           </Routes>
         </div>

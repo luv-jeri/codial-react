@@ -57,7 +57,7 @@ function Navbar() {
               <NavLink to="/logout">Log Out</NavLink>
             </li>
             <li>
-              <NavLink to="/register">Register</NavLink>
+              <NavLink to="/signup">Sign Up</NavLink>
             </li>
           </ul>
         </div>
