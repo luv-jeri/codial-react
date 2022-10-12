@@ -39,6 +39,7 @@ export function login(email, password) {
     .then((data) => {
       // console.log('data', data);
       if(data.success){
+        localStorage.setItem('token',data.data.token);
         dispatch(loginSuccess(data.data.user));
       }else{
         dispatch(loginFailed(data.message));
@@ -77,7 +78,7 @@ export function signup(email, password , confirmPassword , name) {
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
       },
-      body: getFormBody({ email, password , confirmPassword , name}),
+      body: getFormBody({ email, password , confirm_password:confirmPassword , name}),
     })
       .then((response) => 
         response.json()

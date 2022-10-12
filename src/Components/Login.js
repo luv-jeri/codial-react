@@ -13,16 +13,13 @@ export class Login extends Component {
 
   }
   handleEmailInput=(event)=>{
-    console.log('event.target.value',event.target.value);
     this.setState({email:event.target.value});
   }
   handlePasswordInput=(event)=>{
-    console.log('event.target.value',event.target.value);
     this.setState({password:event.target.value});
   }
   handleFormSubmit=(e) =>{
     e.preventDefault();
-    console.log('state', this.state);
     let {email , password} = this.state;
 
     if(email && password){
