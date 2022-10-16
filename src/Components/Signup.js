@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Navigate } from 'react-router-dom';
 import { signup, startSignup , clearAuthState} from '../Actions/Auth';
 import { connect } from 'react-redux';
 
@@ -52,7 +53,10 @@ class Signup extends Component {
     }
   };
   render() {
-    const { error, inProgress } = this.props.auth;
+    const { error, inProgress, isLoggedIn } = this.props.auth;
+    if(isLoggedIn){
+      return <Navigate to='/'/>; 
+    }
     return (
       <form className="login-form">
         <span className="login-signup-header">Sign Up</span>
