@@ -5,7 +5,7 @@ import Home from './Home';
 import Page404 from './Page404';
 import Login from './Login';
 import Signup from './Signup';
-
+import Setting from './Setting';
 export{
     // App,
     Home,
@@ -14,4 +14,5 @@ export{
     Page404,
     Login,
     Signup,
+    Setting,
 }

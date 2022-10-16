@@ -50,12 +50,16 @@ export class Navbar extends Component {
         <div className="right-nav">
           {auth.isLoggedIn && (
             <div className="user">
+              <NavLink to="/setting">
               <img
-                src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
-                alt="user-dp"
-                id="user-dp"
-              />
+                  src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
+                  alt="user-dp"
+                  id="user-dp"
+                />
+              </NavLink>
               <span>{auth.user.name}</span>
+
+              
             </div>
           )}
 
@@ -72,11 +76,7 @@ export class Navbar extends Component {
                 </>
               )}
 
-              {auth.isLoggedIn && (
-                <li onClick={this.logOut}>
-                  Log Out
-                </li>
-              )}
+              {auth.isLoggedIn && <li onClick={this.logOut}>Log Out</li>}
             </ul>
           </div>
         </div>
