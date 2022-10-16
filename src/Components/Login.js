@@ -1,37 +1,39 @@
 import React, { Component } from 'react';
-import {connect} from 'react-redux';
-import {login} from '../Actions/Auth'
+import { connect } from 'react-redux';
+import { clearAuthState, login } from '../Actions/Auth';
 
 export class Login extends Component {
   constructor(props) {
     super(props);
     // this.handleFormSubmit = this.handleFormSubmit.bind(this); // required with simple function
     this.state = {
-        email:'',
-        password:''
+      email: '',
+      password: '',
     };
-
   }
-  handleEmailInput=(event)=>{
-    this.setState({email:event.target.value});
+  componentWillUnmount() {
+    this.props.dispatch(clearAuthState());
   }
-  handlePasswordInput=(event)=>{
-    this.setState({password:event.target.value});
-  }
-  handleFormSubmit=(e) =>{
+  handleEmailInput = (event) => {
+    this.setState({ email: event.target.value });
+  };
+  handlePasswordInput = (event) => {
+    this.setState({ password: event.target.value });
+  };
+  handleFormSubmit = (e) => {
     e.preventDefault();
-    let {email , password} = this.state;
+    let { email, password } = this.state;
 
-    if(email && password){
-      this.props.dispatch(login(email,password));
+    if (email && password) {
+      this.props.dispatch(login(email, password));
     }
-  }
+  };
   render() {
-    const {error, inProgress} = this.props.auth;
+    const { error, inProgress } = this.props.auth;
     return (
       <form className="login-form">
         <span className="login-signup-header">Log In</span>
-        {error && <div className='alert error-dailog'>{error}</div>}
+        {error && <div className="alert error-dailog">{error}</div>}
         <div className="field">
           <input
             type="email"
@@ -51,20 +53,25 @@ export class Login extends Component {
           />
         </div>
         <div className="field">
-          {inProgress ? 
-          <button onClick={this.handleFormSubmit} disabled={inProgress} >Login In...</button>
-          :<button onClick={this.handleFormSubmit} disabled={inProgress} >Log In</button>
-          }
+          {inProgress ? (
+            <button onClick={this.handleFormSubmit} disabled={inProgress}>
+              Login In...
+            </button>
+          ) : (
+            <button onClick={this.handleFormSubmit} disabled={inProgress}>
+              Log In
+            </button>
+          )}
         </div>
       </form>
     );
   }
 }
 
-function mapStateToProps(state){
-  return{
-    auth : state.auth
-  }
+function mapStateToProps(state) {
+  return {
+    auth: state.auth,
+  };
 }
 
 export default connect(mapStateToProps)(Login);

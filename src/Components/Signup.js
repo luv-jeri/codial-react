@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { signup, startSignup } from '../Actions/Auth';
+import { signup, startSignup , clearAuthState} from '../Actions/Auth';
 import { connect } from 'react-redux';
 
 class Signup extends Component {
@@ -13,7 +13,9 @@ class Signup extends Component {
       name: '',
     };
   }
-
+  componentWillUnmount() {
+    this.props.dispatch(clearAuthState());
+  }
   handleEmail = (event) => {
     this.setState({
       email: event.target.value,
@@ -46,17 +48,15 @@ class Signup extends Component {
 
     if (email && password && confirmPassword && name) {
       this.props.dispatch(startSignup());
-      this.props.dispatch(signup(email, password, confirmPassword, name ));
+      this.props.dispatch(signup(email, password, confirmPassword, name));
     }
   };
   render() {
-    const {error, inProgress} = this.props.auth;
+    const { error, inProgress } = this.props.auth;
     return (
       <form className="login-form">
         <span className="login-signup-header">Sign Up</span>
-        {error && (
-          <div className="alert error-dailog">{error}</div>
-        )}
+        {error && <div className="alert error-dailog">{error}</div>}
         <div className="field">
           <input
             onChange={this.handleEmail}
@@ -95,17 +95,11 @@ class Signup extends Component {
         </div>
         <div className="field">
           {inProgress ? (
-            <button
-              disabled={inProgress}
-              onClick={this.handleFormSubmit}
-            >
+            <button disabled={inProgress} onClick={this.handleFormSubmit}>
               Signing Up..
             </button>
           ) : (
-            <button
-              disabled={inProgress}
-              onClick={this.handleFormSubmit}
-            >
+            <button disabled={inProgress} onClick={this.handleFormSubmit}>
               Sign Up
             </button>
           )}
