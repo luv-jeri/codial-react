@@ -1,4 +1,7 @@
-import { LOGIN_START, LOGIN_SUCCESS, LOGIN_FAILED, SIGNUP_START,SIGNUP_SUCCESS,SIGNUP_FAILED } from './Action_Types';
+import { LOGIN_START, LOGIN_SUCCESS, LOGIN_FAILED, 
+          SIGNUP_START,SIGNUP_SUCCESS,SIGNUP_FAILED,
+          AUTHENTICATE_USER, LOG_OUT
+        } from './Action_Types';
 import { APIUrls } from '../Helpers/Urls';
 import { getFormBody } from '../Helpers/Utils';
 
@@ -78,7 +81,7 @@ export function signup(email, password , confirmPassword , name) {
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
       },
-      body: getFormBody({ email, password , confirm_password:confirmPassword , name}),
+      body: getFormBody({ email, password ,confirm_password:confirmPassword , name}),
     })
       .then((response) => 
         response.json()
@@ -93,4 +96,17 @@ export function signup(email, password , confirmPassword , name) {
         }
       });
   };
+}
+
+
+export function authenticateUser(user){
+  return {
+    type:AUTHENTICATE_USER,
+    user,
+  }
+}
+export function logoutUser(){
+  return{
+    type: LOG_OUT,
+  }
 }

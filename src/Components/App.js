@@ -6,6 +6,7 @@ import jwtDecode from 'jwt-decode';
 
 import { fetchPosts } from '../Actions/Posts';
 import { Home, Navbar,Page404,Login,Signup } from './';
+import { authenticateUser } from '../Actions/Auth';
 
 class App extends Component {
   componentDidMount() {
@@ -13,8 +14,13 @@ class App extends Component {
     let user;
     if(token){
       user = jwtDecode(token);
-    }
     console.log('user',user);
+      this.props.dispatch(authenticateUser({
+        name: user.name,
+        email: user.email,
+        _id: user._id,
+      }));
+    }
     this.props.dispatch(fetchPosts());
   }
 
