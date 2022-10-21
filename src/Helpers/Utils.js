@@ -9,3 +9,7 @@ export function getFormBody(params) {
 
   return formBody.join('&');
 }
+
+export const history = {
+  location: null
+};

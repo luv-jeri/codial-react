@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Navigate } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { clearAuthState, login } from '../Actions/Auth';
+import { history } from '../Helpers/Utils';
 
 export class Login extends Component {
   constructor(props) {
@@ -31,9 +32,11 @@ export class Login extends Component {
   };
   render() {
     const { error, inProgress, isLoggedIn } = this.props.auth;
+    const { pathname } = history.location || {  pathname: '/'  };
+    
 
     if(isLoggedIn){
-      return <Navigate to='/'/>; 
+      return <Navigate to={pathname}/>; 
     }
     return (
       <form className="login-form">
