@@ -1,9 +1,18 @@
-import { LOGIN_START, LOGIN_SUCCESS, LOGIN_FAILED, 
-          SIGNUP_START,SIGNUP_SUCCESS,SIGNUP_FAILED,
-          AUTHENTICATE_USER, LOG_OUT, CLEAR_AUTH_STATE
-        } from './Action_Types';
+import {
+  LOGIN_START,
+  LOGIN_SUCCESS,
+  LOGIN_FAILED,
+  SIGNUP_START,
+  SIGNUP_SUCCESS,
+  SIGNUP_FAILED,
+  AUTHENTICATE_USER,
+  LOG_OUT,
+  CLEAR_AUTH_STATE,
+  EDIT_USER_SUCCESS,
+  EDIT_USER_FAILED,
+} from './Action_Types';
 import { APIUrls } from '../Helpers/Urls';
-import { getFormBody } from '../Helpers/Utils';
+import { getAuthTokenFormLocalStorage, getFormBody } from '../Helpers/Utils';
 
 export function startLogin() {
   return {
@@ -14,14 +23,14 @@ export function startLogin() {
 export function loginSuccess(user) {
   return {
     type: LOGIN_SUCCESS,
-    user
+    user,
   };
 }
 
 export function loginFailed(errorMessage) {
   return {
     type: LOGIN_FAILED,
-    error : errorMessage
+    error: errorMessage,
   };
 }
 
@@ -36,21 +45,20 @@ export function login(email, password) {
       },
       body: getFormBody({ email, password }),
     })
-    .then((response) => {
-      return response.json();
-    })
-    .then((data) => {
-      // console.log('data', data);
-      if(data.success){
-        localStorage.setItem('token',data.data.token);
-        dispatch(loginSuccess(data.data.user));
-      }else{
-        dispatch(loginFailed(data.message));
-      }
-    });
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        // console.log('data', data);
+        if (data.success) {
+          localStorage.setItem('token', data.data.token);
+          dispatch(loginSuccess(data.data.user));
+        } else {
+          dispatch(loginFailed(data.message));
+        }
+      });
   };
 }
-
 
 export function startSignup() {
   return {
@@ -68,11 +76,11 @@ export function signupSuccess(user) {
 export function signupFailed(errorMessage) {
   return {
     type: SIGNUP_FAILED,
-    error : errorMessage
+    error: errorMessage,
   };
 }
 
-export function signup(email, password , confirmPassword , name) {
+export function signup(email, password, confirmPassword, name) {
   return (dispatch) => {
     dispatch(startSignup());
     let url = APIUrls.signup();
@@ -81,38 +89,85 @@ export function signup(email, password , confirmPassword , name) {
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
       },
-      body: getFormBody({ email, password ,confirm_password:confirmPassword , name}),
+      body: getFormBody({
+        email,
+        password,
+        confirm_password: confirmPassword,
+        name,
+      }),
     })
-      .then((response) => 
-        response.json()
-      )
+      .then((response) => response.json())
       .then((data) => {
         // console.log('data', data);
-        if(data.success){
+        if (data.success) {
           localStorage.setItem('token', data.data.token);
           dispatch(signupSuccess(data.data.user));
-        }else{
+        } else {
           dispatch(signupFailed(data.message));
         }
       });
   };
 }
 
-
-export function authenticateUser(user){
+export function authenticateUser(user) {
   return {
-    type:AUTHENTICATE_USER,
+    type: AUTHENTICATE_USER,
     user,
-  }
+  };
 }
-export function logoutUser(){
-  return{
+export function logoutUser() {
+  return {
     type: LOG_OUT,
-  }
+  };
 }
 
-export function clearAuthState(){
-  return{
+export function clearAuthState() {
+  return {
     type: CLEAR_AUTH_STATE,
-  }
+  };
+}
+
+//edit user profile action
+
+export function editUserSuccessful(user) {
+  return {
+    type: EDIT_USER_SUCCESS,
+    user,
+  };
+}
+
+export function editUserFailed(error) {
+  return {
+    type: EDIT_USER_FAILED,
+    error,
+  };
+}
+
+export function editUser(name, email, password, confirmPassword, userId) {
+  return (dispatch) => {
+    const url = APIUrls.editUrl();
+    fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        Authorization: `Bearer ${getAuthTokenFormLocalStorage()}`, // Remove Auth if not required
+      },
+      body: getFormBody({
+        name,
+        password,
+        confirm_password: confirmPassword,
+        id: userId,
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log('data', data);
+        if (data.success) {
+          dispatch(editUserSuccessful(data.data.user));
+          localStorage.setItem('token', data.data.token);
+          return;
+        }
+        dispatch(editUserFailed(data.message));
+      });
+  };
 }

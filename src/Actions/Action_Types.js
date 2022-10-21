@@ -19,3 +19,8 @@ export const AUTHENTICATE_USER = 'AUTHENTICATE_USER';
 export const LOG_OUT = 'LOG_OUT';
 
 export const CLEAR_AUTH_STATE = 'CLEAR_AUTH_STATE'; // to clear the state msg when nevigate from one page to another
+
+//edit profile action types
+
+export const EDIT_USER_SUCCESS = 'EDIT_USER_SUCCESS';
+export const EDIT_USER_FAILED = 'EDIT_USER_FAILED';

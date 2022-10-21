@@ -13,3 +13,7 @@ export function getFormBody(params) {
 export const history = {
   location: null
 };
+
+export function getAuthTokenFormLocalStorage() {
+  return localStorage.getItem('token');
+}

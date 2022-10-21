@@ -14,11 +14,11 @@ import jwtDecode from 'jwt-decode';
 import { fetchPosts } from '../Actions/Posts';
 import { Home, Navbar, Page404, Login, Signup, Setting } from './';
 import { authenticateUser } from '../Actions/Auth';
-import { history } from '../Helpers/Utils';
+import { history ,getAuthTokenFormLocalStorage} from '../Helpers/Utils';
 
 class App extends Component {
   componentDidMount() {
-    let token = localStorage.getItem('token');
+    let token = getAuthTokenFormLocalStorage();
     let user;
     if (token) {
       user = jwtDecode(token);
@@ -41,9 +41,8 @@ class App extends Component {
 
     const PrivateWrapper = () => {
       const { auth } = this.props;
-      // const {val: Component} = props;
     history.location = useLocation();
-    console.log('history.location', history.location);
+    // console.log('history.location', history.location);
       return auth.isLoggedIn ? (
         <Outlet />
       ) : (
