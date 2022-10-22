@@ -143,7 +143,7 @@ export function editUserFailed(error) {
   };
 }
 
-export function editUser(name, email, password, confirmPassword, userId) {
+export function editUser(name, password, confirmPassword, userId) {
   return (dispatch) => {
     const url = APIUrls.editUrl();
     fetch(url, {
@@ -161,7 +161,7 @@ export function editUser(name, email, password, confirmPassword, userId) {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log('data', data);
+        console.log('edit user data', data);
         if (data.success) {
           dispatch(editUserSuccessful(data.data.user));
           localStorage.setItem('token', data.data.token);

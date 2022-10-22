@@ -58,15 +58,15 @@ class App extends Component {
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
             <Route path="*" element={<Page404 />} />
-            <Route element={<PrivateWrapper />}>
-              <Route
+            <Route
                 exact
                 path="/"
                 element={<Home {...this.props} posts={this.props.posts} />}
                 // render={(props) => {
                 //   return <Home {...props} posts={this.props.posts} />;
                 // }}
-              />
+            />
+            <Route element={<PrivateWrapper />}>
               <Route path="/setting" element={<Setting />} />
             </Route>
           </Routes>
