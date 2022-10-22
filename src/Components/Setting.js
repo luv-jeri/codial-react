@@ -9,8 +9,9 @@ export class Setting extends Component {
       password: '',
       confirmPassword: '',
       editMode: false,
-      callComponentWillUnmount: false,
+      
     };
+    this.callComponentWillUnmount= true;
   }
   
   handleChange = (fieldName, val) => {
@@ -22,13 +23,17 @@ export class Setting extends Component {
     
     const{name, password, confirmPassword} = this.state;
     const {user} = this.props.auth;
+    this.callComponentWillUnmount= false;
     
     this.props.dispatch(editUser(name,password,confirmPassword,user._id));
     
   };
   componentWillUnmount=()=> {
     
+    if(this.callComponentWillUnmount){
       this.props.dispatch(clearAuthState());
+    }
+    
   };
   
   render() {
