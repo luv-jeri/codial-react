@@ -15,6 +15,7 @@ import { fetchPosts } from '../Actions/Posts';
 import { Home, Navbar, Page404, Login, Signup, Setting } from './';
 import { authenticateUser } from '../Actions/Auth';
 import { history ,getAuthTokenFormLocalStorage} from '../Helpers/Utils';
+import UserProfile from './UserProfile';
 
 class App extends Component {
   componentDidMount() {
@@ -68,6 +69,9 @@ class App extends Component {
             />
             <Route element={<PrivateWrapper />}>
               <Route path="/setting" element={<Setting />} />
+              <Route path="/user" >
+              <Route path=":userId" element={<UserProfile />} />
+              </Route>
             </Route>
           </Routes>
         </div>
