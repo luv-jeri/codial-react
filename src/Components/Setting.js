@@ -11,7 +11,6 @@ export class Setting extends Component {
       editMode: false,
       
     };
-    this.callComponentWillUnmount= true;
   }
   
   handleChange = (fieldName, val) => {
@@ -19,24 +18,27 @@ export class Setting extends Component {
       [fieldName]: val,
     });
   };
-  handleSave = ()=>{
-    
+  handleSave = (e)=>{
+    e.preventDefault();
     const{name, password, confirmPassword} = this.state;
     const {user} = this.props.auth;
-    this.callComponentWillUnmount= false;
-    
+  
     this.props.dispatch(editUser(name,password,confirmPassword,user._id));
     
   };
-  componentWillUnmount=()=> {
+  
+  componentWillUnmount() {
     
-    if(this.callComponentWillUnmount){
-      this.props.dispatch(clearAuthState());
-    }
-    
+     
+    this.props.auth.error = null;
+    console.log('this.props.auth.error',this.props.auth.error);
+
+     console.log('componentWillUnmount');
+     
   };
   
   render() {
+    console.log('setting render');
     const { user,error } = this.props.auth;
     const { editMode } = this.state;
     return (
@@ -48,7 +50,7 @@ export class Setting extends Component {
           />
         </div>
         {error && <div className='alert error-dailog'>{error}</div>}
-        {error=== false && <div className='alert success-dailog'>Successfully Updated Profile!</div>}
+        {error === false && (<div className='alert success-dailog'>Successfully Updated Profile!</div>)}
         <div className="field">
           <div className="field-lable">Email</div>
           <div className="field-value">{user.email}</div>

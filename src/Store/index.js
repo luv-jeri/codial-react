@@ -3,12 +3,12 @@ import thunk from 'redux-thunk';
 import logger from 'redux-logger';
 
 
-import reducer from '../Reducers/index';
+import combineReducers from '../Reducers/index';
 
 
 let store;
 
 export function configureStore(){
-    store = createStore(reducer , applyMiddleware(thunk, logger));
+    store = createStore(combineReducers , applyMiddleware(thunk, logger));
     return store;
 }

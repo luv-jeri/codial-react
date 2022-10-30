@@ -37,12 +37,12 @@ class App extends Component {
   }
 
   render() {
-    console.log('props', this.props);
+    // console.log('props', this.props);
     //private router
 
     const PrivateWrapper = () => {
       const { auth } = this.props;
-    history.location = useLocation();
+      history.location = useLocation();
     // console.log('history.location', history.location);
       return auth.isLoggedIn ? (
         <Outlet />
@@ -60,17 +60,18 @@ class App extends Component {
             <Route path="/signup" element={<Signup />} />
             <Route path="*" element={<Page404 />} />
             <Route
-                exact
-                path="/"
-                element={<Home {...this.props} posts={this.props.posts} />}
-                // render={(props) => {
-                //   return <Home {...props} posts={this.props.posts} />;
-                // }}
+                  exact
+                  path="/"
+                  element={<Home {...this.props} posts={this.props.posts} />}
+                  // render={(props) => {
+                  //   return <Home {...props} posts={this.props.posts} />;
+                  // }}
             />
             <Route element={<PrivateWrapper />}>
+              
               <Route path="/setting" element={<Setting />} />
               <Route path="/user" >
-              <Route path=":userId" element={<UserProfile />} />
+                <Route path=":userId" element={<UserProfile/>} />
               </Route>
             </Route>
           </Routes>
