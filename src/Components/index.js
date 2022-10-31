@@ -6,6 +6,8 @@ import Page404 from './Page404';
 import Login from './Login';
 import Signup from './Signup';
 import Setting from './Setting';
+import FriendsList from './FriendsList';
+import FriendsListItem from './FriendsListItem';
 export{
     // App,
     Home,
@@ -15,4 +17,6 @@ export{
     Login,
     Signup,
     Setting,
+    FriendsList,
+    FriendsListItem
 }

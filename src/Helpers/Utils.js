@@ -11,9 +11,9 @@ export function getFormBody(params) {
 }
 
 export const history = {
-  location: null
+  location: null,
 };
 
-export function getAuthTokenFormLocalStorage() {
+export function getAuthTokenFromLocalStorage() {
   return localStorage.getItem('token');
 }

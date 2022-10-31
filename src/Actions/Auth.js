@@ -12,7 +12,7 @@ import {
   EDIT_USER_FAILED,
 } from './Action_Types';
 import { APIUrls } from '../Helpers/Urls';
-import { getAuthTokenFormLocalStorage, getFormBody } from '../Helpers/Utils';
+import { getAuthTokenFromLocalStorage, getFormBody } from '../Helpers/Utils';
 
 export function startLogin() {
   return {
@@ -150,7 +150,7 @@ export function editUser(name, password, confirmPassword, userId) {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
-        Authorization: `Bearer ${getAuthTokenFormLocalStorage()}`, // Remove Auth if not required
+        Authorization: `Bearer ${getAuthTokenFromLocalStorage()}`, // Remove Auth if not required
       },
       body: getFormBody({
         name,

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { clearAuthState, editUser } from '../Actions/Auth';
+import { editUser } from '../Actions/Auth';
 export class Setting extends Component {
   constructor(props) {
     super(props);
@@ -31,14 +31,11 @@ export class Setting extends Component {
     
      
     this.props.auth.error = null;
-    console.log('this.props.auth.error',this.props.auth.error);
-
-     console.log('componentWillUnmount');
+   
      
   };
   
   render() {
-    console.log('setting render');
     const { user,error } = this.props.auth;
     const { editMode } = this.state;
     return (

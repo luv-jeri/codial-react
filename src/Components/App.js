@@ -14,12 +14,13 @@ import jwtDecode from 'jwt-decode';
 import { fetchPosts } from '../Actions/Posts';
 import { Home, Navbar, Page404, Login, Signup, Setting } from './';
 import { authenticateUser } from '../Actions/Auth';
-import { history ,getAuthTokenFormLocalStorage} from '../Helpers/Utils';
+import { history, getAuthTokenFromLocalStorage } from '../Helpers/Utils';
 import UserProfile from './UserProfile';
+import { fetchUserFriends } from '../Actions/Friends';
 
 class App extends Component {
   componentDidMount() {
-    let token = getAuthTokenFormLocalStorage();
+    let token = getAuthTokenFromLocalStorage();
     let user;
     if (token) {
       user = jwtDecode(token);
@@ -31,23 +32,24 @@ class App extends Component {
           _id: user._id,
         })
       );
+      this.props.dispatch(fetchUserFriends());
     }
     this.props.dispatch(fetchPosts());
-    
   }
 
   render() {
     // console.log('props', this.props);
     //private router
+    // const {posts, friends, auth} = this.props;
 
     const PrivateWrapper = () => {
       const { auth } = this.props;
       history.location = useLocation();
-    // console.log('history.location', history.location);
+      // console.log('history.location', history.location);
       return auth.isLoggedIn ? (
         <Outlet />
       ) : (
-        <Navigate to={{pathname: "/login"}} />
+        <Navigate to={{ pathname: '/login' }} />
       );
     };
 
@@ -60,18 +62,23 @@ class App extends Component {
             <Route path="/signup" element={<Signup />} />
             <Route path="*" element={<Page404 />} />
             <Route
-                  exact
-                  path="/"
-                  element={<Home {...this.props} posts={this.props.posts} />}
-                  // render={(props) => {
-                  //   return <Home {...props} posts={this.props.posts} />;
-                  // }}
+              path="/"
+              element={
+                <Home
+                  {...this.props}
+                  // posts={posts}
+                  // friends={friends}
+                  // isLoggedin={auth.isLoggedin}
+                />
+              }
+              // render={(props) => {
+              //   return <Home {...props} posts={this.props.posts} />;
+              // }}
             />
             <Route element={<PrivateWrapper />}>
-              
               <Route path="/setting" element={<Setting />} />
-              <Route path="/user" >
-                <Route path=":userId" element={<UserProfile/>} />
+              <Route path="/user">
+                <Route path=":userId" element={<UserProfile />} />
               </Route>
             </Route>
           </Routes>
@@ -85,6 +92,7 @@ function mapStateToProps(state) {
   return {
     posts: state.posts,
     auth: state.auth,
+    friends: state.friends,
   };
 }
 

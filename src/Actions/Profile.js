@@ -1,5 +1,5 @@
 import { APIUrls } from '../Helpers/Urls';
-import { getAuthTokenFormLocalStorage } from '../Helpers/Utils';
+import { getAuthTokenFromLocalStorage } from '../Helpers/Utils';
 import {
   USER_PROFILE_SUCCESS,
   USER_PROFILE_FAILED,
@@ -36,7 +36,7 @@ export function fetchUserProfile(userId){
             // method: 'GET',
             headers: {
               'Content-Type': 'application/x-www-form-urlencoded',
-              'Authorization': `Bearer ${getAuthTokenFormLocalStorage()}` // Remove Auth if not required
+              'Authorization': `Bearer ${getAuthTokenFromLocalStorage()}` // Remove Auth if not required
             },
           })
           .then((response) => response.json())
