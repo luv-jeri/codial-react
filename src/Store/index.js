@@ -5,7 +5,6 @@ import logger from 'redux-logger';
 
 import combineReducers from '../Reducers/index';
 
-
 let store;
 
 export function configureStore(){
