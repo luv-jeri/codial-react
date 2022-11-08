@@ -27,10 +27,6 @@ export function fetchFriendsSucces(friends) {
 }
 
 export function addFriend(friend) {
-  console.log('friend', {
-    type: ADD_FRIEND,
-    friend,
-  });
   return {
     type: ADD_FRIEND,
     friend,

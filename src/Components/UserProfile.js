@@ -69,22 +69,15 @@ export default function UserProfile() {
 
     if (data.success) {
       setSuccess(data.message);
-
       // * Toggle the state of isUserAFriend, we dont want to calculate it again
       setIsUserAFriend(!isUserAFriend);
 
-      // ! Dispatch will update the state of friends and useSelector will forcefully re-render the component and will make the state to be default again
-      // ? So we need to call the dsipatch function inside the setTimeout function so that the state will be updated after 1 second and we can see the messages and changes
-      // ! WARNING: do not clear the timeout function in the useEffect function because it will clear the timeout function and the store will not be updated.
-      // # REASON : redux will not preserve the state of the component on re-rendering.
-      
-      setTimeout(() => {
-        dispatch(
-          !isUserAFriend
-            ? addFriend(data.data.friendship)
-            : removeFriend(userId)
-        );
-      }, 1000);
+      // Redux will actully check for the store and if the store is updated i.e. if the refrence of the frinds array changes then i will cause the component to re-render
+      // # then change the action type to ADD_FRIEND or REMOVE_FRIEND
+      // ! have a look in the reducer for the action type it is updated there
+      dispatch(
+        !isUserAFriend ? addFriend(data.data.friendship) : removeFriend(userId)
+      );
     } else {
       setError(data.message);
     }
